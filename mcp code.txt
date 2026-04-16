@@ -1,0 +1,31 @@
+ 
+import asyncio
+from agents.mcp.server import MCPServerStdio
+
+async def main():
+    async with MCPServerStdio(
+        params={
+            "command": "mcp-neo4j-memory",
+            "args": [],
+            "env": {
+                "NEO4J_URI": "neo4j://awsaidnval000z.jnj.com:7687",
+                "NEO4J_USERNAME": "neo4j",
+                "NEO4J_PASSWORD": "MVP2026!",
+                "NEO4J_DATABASE": "newone",
+            },
+        },
+        client_session_timeout_seconds=30,
+    ) as server:
+        
+        tools = await server.list_tools()
+        
+        print("Tools count:", len(tools))
+        
+        print("First 10 tool names:", [t.name for t in tools[:10]])
+
+
+
+        print("MCP server started and connected")
+
+if __name__ == "__main__":
+    asyncio.run(main())
