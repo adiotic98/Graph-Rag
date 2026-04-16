@@ -34,3 +34,25 @@ MCP server started and connected
 
 if __name__ == "__main__":
     asyncio.run(main())
+
+
+mcp_server = MCPServerStdio(
+    params={
+        "command": "mcp-neo4j-memory",  # Your working command
+        "args": [],
+        "env": {
+            "NEO4J_URI": "neo4j://awsaidnval000z.jnj.com:7687",  # Note: neo4j:// (not +aws?)
+            "NEO4J_USERNAME": "neo4j",
+            "NEO4J_PASSWORD": "MVP2026!",
+            "NEO4J_DATABASE": "newone",
+        },
+    },
+    client_session_timeout_seconds=30,
+)
+
+async def test_mcp_notebook():
+    async with mcp_server:
+        tools = await mcp_server.list_tools()
+        print("Notebook MCP Tools:", [t.name for t in tools[:9]])
+
+await test_mcp_notebook()  # Should match your script output
