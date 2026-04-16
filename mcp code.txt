@@ -23,6 +23,11 @@ async def main():
         
         print("First 10 tool names:", [t.name for t in tools[:10]])
 
+output:
+Tools count: 9
+First 10 tool names: ['read_graph', 'create_entities', 'create_relations', 'add_observations', 'delete_entities', 'delete_observations', 'delete_relations', 'search_memories', 'find_memories_by_name']
+MCP server started and connected
+
 
 
         print("MCP server started and connected")
