@@ -56,3 +56,30 @@ async def test_mcp_notebook():
         print("Notebook MCP Tools:", [t.name for t in tools[:9]])
 
 await test_mcp_notebook()  # Should match your script output
+
+
+async def mcp_agent_query(query: str, prior_context: str = ""):
+    async with mcp_server:
+        agent = Agent(
+            name="GraphRAG-MCP-Agent",
+            instructions=f"""Biomedical expert with GraphRAG + Neo4j Memory.
+            
+Use MCP tools:
+- create_entities/add_observations: Store query facts/entities
+- search_memories/find_memories_by_name: Recall prior context
+- read_graph: Graph queries (ADA trough, cohorts)
+            
+Prior context: {prior_context}
+            
+Query: {query}
+            
+Combine with your GraphRAG knowledge for comprehensive answers.""",
+            model="gpt-4o",  # Or AzureOpenAI(model="iMS-GPT4oQA")
+            mcp_servers=[mcp_server],  # Enables all 9 tools
+        )
+        result = await Runner.run(agent, query)
+        return result.final_output
+
+# Test multi-turn memory
+print(await mcp_agent_query("Subjects who first became ADA at week 16: store key stats (mean trough week 36)."))
+print(await mcp_agent_query("Recall ADA week 16 subjects' trough stats from memory."))
