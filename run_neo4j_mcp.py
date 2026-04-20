@@ -80,3 +80,16 @@ Combine with your GraphRAG knowledge for comprehensive answers.""",
 
 if __name__ == "__main__":
     asyncio.run(main())
+ ------------------------------------------------------------------------------------------
+async def test_model():
+    try:
+        response = await azure_client.chat.completions.create(
+            model="iMS-GPT4oQA",
+            messages=[{"role": "user", "content": "test"}]
+        )
+        print("✅ Model accessible:", response.choices.message.content[:50])
+    except Exception as e:
+        print("❌ Model error:", e)
+
+# Call in main()
+await test_model()
