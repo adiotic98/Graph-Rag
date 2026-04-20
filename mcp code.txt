@@ -126,3 +126,19 @@ openai.NotFoundError: Error code: 404 - {'error': {'code': '404', 'message': 'Re
 [non-fatal] Tracing: request failed: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)
 [non-fatal] Tracing: request failed: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)
 [non-fatal] Tracing: max retries reached, giving up on this batch.
+--------------------------------------------------------------
+import ssl
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+# SSL context (add to client)
+ssl_context = ssl.create_default_context()
+ssl_context.check_hostname = False
+ssl_context.verify_mode = ssl.CERT_NONE
+
+azure_client = AsyncAzureOpenAI(
+    azure_endpoint="https://ims-openai-qa.openai.azure.com/",
+    api_key="f0e56505e5594c9db822a6e7addc7209",
+    api_version="2024-02-02-preview",  # Use stable version
+    http_client=httpx.AsyncClient(verify=False)  # Disable SSL verify
+)
