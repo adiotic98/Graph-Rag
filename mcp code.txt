@@ -117,3 +117,12 @@ async def mcp_agent_query(query: str, prior_context: str = ""):
         )
         result = await Runner.run(agent, query)
         return result.final_output
+
+
+
+--------------------------------------------
+openai.NotFoundError: Error code: 404 - {'error': {'code': '404', 'message': 'Resource not found'}}
+[non-fatal] Tracing: request failed: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)
+[non-fatal] Tracing: request failed: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)
+[non-fatal] Tracing: request failed: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)
+[non-fatal] Tracing: max retries reached, giving up on this batch.
